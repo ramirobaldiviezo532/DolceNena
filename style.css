@@ -249,6 +249,11 @@ ul{ list-style:none; margin:0; padding:0; }
   height:170px;
   background:var(--tint, var(--cream-soft));
   display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+}
+.card-media img{
+  width:100%; height:100%;
+  object-fit:cover;
 }
 .card-media span{
   font-family:var(--font-display);
