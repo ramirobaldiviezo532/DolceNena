@@ -371,3 +371,43 @@ ul{ list-style:none; margin:0; padding:0; }
   .card-pack{ grid-column:span 1; flex-direction:column; align-items:stretch; }
   .card-pack .card-body{ padding:30px 26px; }
 }
+
+/* ===================================================================
+   Colección Premium — reglas nuevas, no tocan ninguna clase existente
+=================================================================== */
+.section-premium{
+  background:var(--maroon);
+}
+.eyebrow-light{ color:var(--blush); }
+.section-title-light{ color:var(--white); }
+.section-lead-light{ color:rgba(251,247,241,0.78); }
+
+.grid-cards-premium{
+  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.card-premium{
+  position:relative;
+  border:1px solid var(--gold);
+}
+.premium-badge{
+  position:absolute;
+  top:14px; left:14px;
+  z-index:2;
+  background:var(--gold);
+  color:var(--maroon-deep);
+  font-family:var(--font-body);
+  font-size:0.68rem;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:5px 12px;
+  border-radius:2px;
+}
+
+@media (max-width: 720px){
+  .grid-cards-premium{ grid-template-columns:1fr; }
+}
