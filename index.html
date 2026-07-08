@@ -239,13 +239,110 @@
       <div class="card-body">
         <p class="pack-eyebrow">Personaliza tu caja</p>
         <h3>Arma tu pack</h3>
-        <p>Elige entre cualquiera de nuestros tipos de galleta y combínalos como quieras. A mayor cantidad, mayor ahorro.</p>
-        <ul class="pack-discounts">
-          <li><span>3 galletas</span><strong>8% off</strong></li>
-          <li><span>5 galletas</span><strong>12% off</strong></li>
-          <li><span>8 galletas</span><strong>15% off</strong></li>
+        <p>Elige entre cualquiera de nuestros tipos de galleta y combínalos como quieras (normales y premium cuentan igual). A mayor cantidad, mayor ahorro.</p>
+
+        <ul class="pack-discounts" id="packDiscountTiers">
+          <li data-tier="3"><span>3 galletas</span><strong>8% off</strong></li>
+          <li data-tier="5"><span>5 galletas</span><strong>12% off</strong></li>
+          <li data-tier="8"><span>8 galletas</span><strong>15% off</strong></li>
         </ul>
-        <a href="#" class="btn btn-light">Armar mi pack</a>
+
+        <div class="pack-builder" id="packBuilder">
+          <div class="pack-row" data-flavor="Choconena" data-unit-price="10.00">
+            <span class="pack-row-name">Choconena</span>
+            <span class="pack-row-price">Bs. 10.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de Choconena" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de Choconena">+</button>
+            </div>
+          </div>
+
+          <div class="pack-row" data-flavor="Pecosita" data-unit-price="10.00">
+            <span class="pack-row-name">Pecosita</span>
+            <span class="pack-row-price">Bs. 10.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de Pecosita" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de Pecosita">+</button>
+            </div>
+          </div>
+
+          <div class="pack-row" data-flavor="Velvet Dreams" data-unit-price="10.00">
+            <span class="pack-row-name">Velvet Dreams</span>
+            <span class="pack-row-price">Bs. 10.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de Velvet Dreams" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de Velvet Dreams">+</button>
+            </div>
+          </div>
+
+          <div class="pack-row" data-flavor="La Werita" data-unit-price="10.00">
+            <span class="pack-row-name">La Werita</span>
+            <span class="pack-row-price">Bs. 10.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de La Werita" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de La Werita">+</button>
+            </div>
+          </div>
+
+          <div class="pack-row" data-flavor="La Morenaza" data-unit-price="10.00">
+            <span class="pack-row-name">La Morenaza</span>
+            <span class="pack-row-price">Bs. 10.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de La Morenaza" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de La Morenaza">+</button>
+            </div>
+          </div>
+
+          <div class="pack-row" data-flavor="Galleraka" data-unit-price="10.00">
+            <span class="pack-row-name">Galleraka</span>
+            <span class="pack-row-price">Bs. 10.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de Galleraka" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de Galleraka">+</button>
+            </div>
+          </div>
+
+          <div class="pack-row" data-flavor="Cerelita" data-unit-price="12.00">
+            <span class="pack-row-name">Cerelita <em class="pack-row-badge">Premium</em></span>
+            <span class="pack-row-price">Bs. 12.00</span>
+            <div class="qty-selector pack-qty-selector">
+              <button type="button" class="qty-btn qty-decrease" aria-label="Disminuir cantidad de Cerelita" disabled>−</button>
+              <span class="qty-value">0</span>
+              <button type="button" class="qty-btn qty-increase" aria-label="Aumentar cantidad de Cerelita">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pack-summary">
+          <div class="pack-summary-row">
+            <span>Galletas seleccionadas</span>
+            <strong id="packTotalQty">0</strong>
+          </div>
+          <div class="pack-summary-row">
+            <span>Subtotal</span>
+            <strong id="packSubtotal">Bs. 0.00</strong>
+          </div>
+          <div class="pack-summary-row pack-summary-discount" id="packDiscountRow" hidden>
+            <span>Descuento (<span id="packDiscountPct">0</span>%)</span>
+            <strong id="packDiscountAmount">− Bs. 0.00</strong>
+          </div>
+          <div class="pack-summary-row pack-summary-total">
+            <span>Total a pagar</span>
+            <strong id="packTotal">Bs. 0.00</strong>
+          </div>
+          <p class="pack-nudge" id="packNudge">Elige tus galletas favoritas para armar tu pack.</p>
+        </div>
+
+        <div class="pack-actions">
+          <button type="button" class="pack-clear" id="packClear">Vaciar pack</button>
+          <a href="#" class="btn btn-light is-disabled" id="packWhatsappBtn" aria-disabled="true">Enviar pack por WhatsApp</a>
+        </div>
       </div>
     </article>
   </div>

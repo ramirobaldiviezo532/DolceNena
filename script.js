@@ -79,3 +79,150 @@ document.querySelectorAll('.card').forEach(card => {
 
   render();
 });
+
+// ===== Arma tu pack =====
+const packBuilder = document.getElementById('packBuilder');
+
+if (packBuilder) {
+  const PACK_MAX_PER_FLAVOR = 20;
+
+  // Tramos de descuento por volumen total del pack (normal + premium cuentan igual)
+  const PACK_TIERS = [
+    { min: 8, rate: 0.15 },
+    { min: 5, rate: 0.12 },
+    { min: 3, rate: 0.08 },
+  ];
+
+  const getDiscountRate = (totalQty) => {
+    for (const tier of PACK_TIERS) {
+      if (totalQty >= tier.min) return tier.rate;
+    }
+    return 0;
+  };
+
+  const packTotalQtyEl = document.getElementById('packTotalQty');
+  const packSubtotalEl = document.getElementById('packSubtotal');
+  const packDiscountRowEl = document.getElementById('packDiscountRow');
+  const packDiscountPctEl = document.getElementById('packDiscountPct');
+  const packDiscountAmountEl = document.getElementById('packDiscountAmount');
+  const packTotalEl = document.getElementById('packTotal');
+  const packNudgeEl = document.getElementById('packNudge');
+  const packClearBtn = document.getElementById('packClear');
+  const packWhatsappBtn = document.getElementById('packWhatsappBtn');
+  const packTierEls = document.querySelectorAll('#packDiscountTiers li');
+
+  const packItems = Array.from(packBuilder.querySelectorAll('.pack-row')).map(row => ({
+    row,
+    flavor: row.dataset.flavor,
+    unitPrice: parseFloat(row.dataset.unitPrice),
+    qty: 0,
+    qtyValueEl: row.querySelector('.qty-value'),
+    decreaseBtn: row.querySelector('.qty-decrease'),
+    increaseBtn: row.querySelector('.qty-increase'),
+  }));
+
+  const renderPackSummary = () => {
+    const totalQty = packItems.reduce((sum, item) => sum + item.qty, 0);
+    const subtotal = packItems.reduce((sum, item) => sum + item.qty * item.unitPrice, 0);
+    const rate = getDiscountRate(totalQty);
+    const discountAmount = subtotal * rate;
+    const total = subtotal - discountAmount;
+
+    packTotalQtyEl.textContent = totalQty;
+    packSubtotalEl.textContent = `Bs. ${subtotal.toFixed(2)}`;
+
+    if (rate > 0) {
+      packDiscountRowEl.hidden = false;
+      packDiscountPctEl.textContent = Math.round(rate * 100);
+      packDiscountAmountEl.textContent = `− Bs. ${discountAmount.toFixed(2)}`;
+    } else {
+      packDiscountRowEl.hidden = true;
+    }
+
+    packTotalEl.textContent = `Bs. ${total.toFixed(2)}`;
+
+    // Resalta en los tramos de arriba cuál(es) ya se alcanzaron
+    packTierEls.forEach(li => {
+      const tierMin = parseInt(li.dataset.tier, 10);
+      li.classList.toggle('is-active', totalQty >= tierMin);
+    });
+
+    // Empujoncito práctico: cuánto falta para el siguiente descuento
+    if (totalQty === 0) {
+      packNudgeEl.textContent = 'Elige tus galletas favoritas para armar tu pack.';
+    } else if (totalQty < 3) {
+      packNudgeEl.textContent = `Agrega ${3 - totalQty} galleta(s) más y obtén 8% de descuento.`;
+    } else if (totalQty < 5) {
+      packNudgeEl.textContent = `Agrega ${5 - totalQty} galleta(s) más y obtén 12% de descuento.`;
+    } else if (totalQty < 8) {
+      packNudgeEl.textContent = `Agrega ${8 - totalQty} galleta(s) más y obtén 15% de descuento.`;
+    } else {
+      packNudgeEl.textContent = '¡Descuento máximo del 15% aplicado! 🎉';
+    }
+
+    const isEmpty = totalQty === 0;
+    packWhatsappBtn.classList.toggle('is-disabled', isEmpty);
+    packWhatsappBtn.setAttribute('aria-disabled', String(isEmpty));
+  };
+
+  packItems.forEach(item => {
+    const updateItem = () => {
+      item.qtyValueEl.textContent = item.qty;
+      item.decreaseBtn.disabled = item.qty <= 0;
+      item.increaseBtn.disabled = item.qty >= PACK_MAX_PER_FLAVOR;
+      renderPackSummary();
+    };
+
+    item.decreaseBtn.addEventListener('click', () => {
+      if (item.qty > 0) {
+        item.qty -= 1;
+        updateItem();
+      }
+    });
+
+    item.increaseBtn.addEventListener('click', () => {
+      if (item.qty < PACK_MAX_PER_FLAVOR) {
+        item.qty += 1;
+        updateItem();
+      }
+    });
+  });
+
+  packClearBtn.addEventListener('click', () => {
+    packItems.forEach(item => {
+      item.qty = 0;
+      item.qtyValueEl.textContent = 0;
+      item.decreaseBtn.disabled = true;
+      item.increaseBtn.disabled = false;
+    });
+    renderPackSummary();
+  });
+
+  packWhatsappBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const totalQty = packItems.reduce((sum, item) => sum + item.qty, 0);
+    if (totalQty === 0) return;
+
+    const subtotal = packItems.reduce((sum, item) => sum + item.qty * item.unitPrice, 0);
+    const rate = getDiscountRate(totalQty);
+    const discountAmount = subtotal * rate;
+    const total = subtotal - discountAmount;
+
+    const detalle = packItems
+      .filter(item => item.qty > 0)
+      .map(item => `- ${item.qty}x ${item.flavor} (Bs. ${(item.qty * item.unitPrice).toFixed(2)})`)
+      .join('\n');
+
+    let mensaje = `¡Hola Dolce Nena! Quiero armar este pack:\n${detalle}\n\nGalletas totales: ${totalQty}\nSubtotal: Bs. ${subtotal.toFixed(2)}`;
+    if (rate > 0) {
+      mensaje += `\nDescuento (${Math.round(rate * 100)}%): − Bs. ${discountAmount.toFixed(2)}`;
+    }
+    mensaje += `\nTotal a pagar: Bs. ${total.toFixed(2)}`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+    window.open(url, '_blank');
+  });
+
+  renderPackSummary();
+}
