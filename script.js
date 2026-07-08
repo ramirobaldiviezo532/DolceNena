@@ -27,6 +27,9 @@ navLinks.querySelectorAll('a').forEach(link => {
 const MIN_QTY = 1;
 const MAX_QTY = 20;
 
+// Número de WhatsApp de Dolce Nena (formato internacional, sin "+")
+const WHATSAPP_NUMBER = '59168535424';
+
 document.querySelectorAll('.card').forEach(card => {
   const qtySelector = card.querySelector('.qty-selector');
   const priceEl = card.querySelector('.price');
@@ -35,7 +38,9 @@ document.querySelectorAll('.card').forEach(card => {
   const qtyValueEl = qtySelector.querySelector('.qty-value');
   const decreaseBtn = qtySelector.querySelector('.qty-decrease');
   const increaseBtn = qtySelector.querySelector('.qty-increase');
+  const whatsappBtn = card.querySelector('.btn-whatsapp');
   const unitPrice = parseFloat(priceEl.dataset.unitPrice);
+  const flavorName = whatsappBtn ? whatsappBtn.dataset.flavor : card.querySelector('h3').textContent.trim();
 
   let qty = MIN_QTY;
 
@@ -60,6 +65,17 @@ document.querySelectorAll('.card').forEach(card => {
       render();
     }
   });
+
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      const total = (unitPrice * qty).toFixed(2);
+      const unidad = qty === 1 ? 'galleta' : 'galletas';
+      const mensaje = `¡Hola Dolce Nena! Quiero pedir ${qty} ${unidad} de *${flavorName}*. Total a pagar: Bs. ${total}`;
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+    });
+  }
 
   render();
 });
