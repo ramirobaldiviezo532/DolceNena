@@ -382,13 +382,6 @@ ul{ list-style:none; margin:0; padding:0; }
 .section-title-light{ color:var(--white); }
 .section-lead-light{ color:rgba(251,247,241,0.78); }
 
-.grid-cards-premium{
-  grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
-  max-width:900px;
-  margin-left:auto;
-  margin-right:auto;
-}
-
 .card-premium{
   position:relative;
   border:1px solid var(--gold);
@@ -406,8 +399,4 @@ ul{ list-style:none; margin:0; padding:0; }
   text-transform:uppercase;
   padding:5px 12px;
   border-radius:2px;
-}
-
-@media (max-width: 720px){
-  .grid-cards-premium{ grid-template-columns:1fr; }
 }
