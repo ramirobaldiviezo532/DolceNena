@@ -110,6 +110,9 @@ if (packBuilder) {
   const packClearBtn = document.getElementById('packClear');
   const packWhatsappBtn = document.getElementById('packWhatsappBtn');
   const packTierEls = document.querySelectorAll('#packDiscountTiers li');
+  const packFloatEl = document.getElementById('packFloat');
+  const packFloatQtyEl = document.getElementById('packFloatQty');
+  const packFloatTotalEl = document.getElementById('packFloatTotal');
 
   const packItems = Array.from(packBuilder.querySelectorAll('.pack-row')).map(row => ({
     row,
@@ -163,6 +166,15 @@ if (packBuilder) {
     const isEmpty = totalQty === 0;
     packWhatsappBtn.classList.toggle('is-disabled', isEmpty);
     packWhatsappBtn.setAttribute('aria-disabled', String(isEmpty));
+
+    // Resumen flotante: visible mientras el usuario navega el resto de la página
+    if (packFloatEl) {
+      packFloatEl.hidden = isEmpty;
+      if (!isEmpty) {
+        packFloatQtyEl.textContent = totalQty;
+        packFloatTotalEl.textContent = `Bs. ${total.toFixed(2)}`;
+      }
+    }
   };
 
   packItems.forEach(item => {
