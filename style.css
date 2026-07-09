@@ -200,7 +200,7 @@ ul{ list-style:none; margin:0; padding:0; }
 .section-alt{ background:var(--cream-soft); }
 .eyebrow{
   font-family:var(--font-script);
-  font-size:2.1rem;
+  font-size:3.1rem;
   color:var(--maroon-soft);
   margin:0 0 4px;
 }
