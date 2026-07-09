@@ -560,44 +560,92 @@ ul{ list-style:none; margin:0; padding:0; }
   border:1px solid var(--gold);
 }
 /* ===================================================================
-   Ubicación — mapa interactivo
+   Nosotros — historia + ubicación en dos columnas
 =================================================================== */
+.about-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:64px;
+  align-items:start;
+  margin-top:8px;
+  text-align:left;
+}
+.about-copy p{
+  font-weight:300;
+  color:var(--ink);
+  opacity:0.8;
+  font-size:0.98rem;
+  line-height:1.75;
+  margin:0 0 16px;
+}
+.about-signature{
+  font-family:var(--font-script) !important;
+  font-size:1.5rem !important;
+  color:var(--maroon-soft) !important;
+  opacity:1 !important;
+  font-weight:400 !important;
+  margin-top:22px !important;
+  line-height:1.4 !important;
+}
+
+.about-location{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
 .location-card{
-  position:relative;
-  margin-top:48px;
   border-radius:8px;
   overflow:hidden;
-  box-shadow:0 20px 44px rgba(43,18,34,0.14);
+  box-shadow:0 16px 36px rgba(43,18,34,0.14);
   border:1px solid rgba(67,18,34,0.08);
 }
 .location-map{
   display:block;
   width:100%;
-  height:380px;
+  height:230px;
   border:0;
   filter:sepia(0.12) saturate(0.9) contrast(1.02);
 }
-.location-card::after{
-  content:'';
-  position:absolute;
-  left:0; right:0; bottom:0;
-  height:120px;
-  background:linear-gradient(to top, rgba(44,11,24,0.55), rgba(44,11,24,0));
-  pointer-events:none;
+.location-info{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:var(--white);
+  border-radius:8px;
+  padding:16px 18px;
+  box-shadow:0 10px 26px rgba(43,18,34,0.08);
+  flex-wrap:wrap;
 }
-.location-cta{
-  position:absolute;
-  left:24px; bottom:22px;
-  z-index:2;
-  background:var(--gold);
-  color:var(--white);
-  border-color:var(--gold);
+.location-pin{
+  flex:none;
+  width:38px; height:38px;
+  border-radius:50%;
+  background:var(--cream-soft);
+  color:var(--maroon);
+  display:flex; align-items:center; justify-content:center;
 }
-.location-cta:hover{ background:var(--maroon-deep); }
+.location-text{ flex:1 1 170px; min-width:0; }
+.location-label{
+  font-family:var(--font-script);
+  font-size:1rem;
+  color:var(--maroon-soft);
+  margin:0 0 2px;
+}
+.location-address{
+  font-size:0.86rem;
+  font-weight:500;
+  color:var(--ink);
+  margin:0;
+  line-height:1.4;
+}
+.location-cta{ flex:none; }
 
+@media (max-width: 900px){
+  .about-grid{ grid-template-columns:1fr; gap:40px; }
+}
 @media (max-width: 720px){
-  .location-map{ height:280px; }
-  .location-cta{ left:16px; bottom:16px; }
+  .location-map{ height:210px; }
+  .location-info{ padding:14px 16px; }
 }
 
 /* ===================================================================
