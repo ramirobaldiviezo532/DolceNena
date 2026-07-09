@@ -200,7 +200,7 @@ ul{ list-style:none; margin:0; padding:0; }
 .section-alt{ background:var(--cream-soft); }
 .eyebrow{
   font-family:var(--font-script);
-  font-size:1.9rem;
+  font-size:2.1rem;
   color:var(--maroon-soft);
   margin:0 0 4px;
 }
@@ -351,7 +351,7 @@ ul{ list-style:none; margin:0; padding:0; }
 .card-pack .card-body{ padding:36px 40px; }
 .pack-eyebrow{
   font-family:var(--font-script);
-  font-size:1.3rem;
+  font-size:1.5rem;
   color:var(--blush);
   margin:0 0 2px;
 }
