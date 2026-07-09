@@ -559,6 +559,51 @@ ul{ list-style:none; margin:0; padding:0; }
   position:relative;
   border:1px solid var(--gold);
 }
+/* ===================================================================
+   Redes sociales — botones flotantes
+=================================================================== */
+.social-float{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:200;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.social-float-btn{
+  width:48px; height:48px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--white);
+  box-shadow:0 8px 22px rgba(43,18,34,0.28);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.social-float-btn svg{ width:24px; height:24px; }
+.social-float-btn:hover{
+  transform:translateY(-3px) scale(1.06);
+  box-shadow:0 12px 26px rgba(43,18,34,0.34);
+}
+.social-instagram{
+  background:radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+.social-facebook{ background:#1877F2; }
+.social-tiktok{ background:linear-gradient(135deg, #010101 0%, #010101 55%, #EE1D52 100%); }
+
+@media (max-width: 720px){
+  .social-float{ right:14px; bottom:14px; gap:10px; }
+  .social-float-btn{ width:42px; height:42px; }
+  .social-float-btn svg{ width:21px; height:21px; }
+}
+
+/* Enlaces de redes sociales dentro del footer */
+.footer a[href*="instagram.com"]:hover,
+.footer a[href*="facebook.com"]:hover,
+.footer a[href*="tiktok.com"]:hover{
+  color:var(--gold);
+  text-decoration:underline;
+}
+
 .premium-badge{
   position:absolute;
   top:14px; left:14px;
