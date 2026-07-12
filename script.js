@@ -246,12 +246,12 @@ if (feedbackForm) {
   // 🔧 Reemplaza estos valores con los de TU proyecto de Firebase.
   // Los encuentras en: Firebase Console → ⚙️ Configuración del proyecto → "Tus apps" → SDK setup and configuration.
   const firebaseConfig = {
-    apiKey: 'TU_API_KEY',
-    authDomain: 'TU_PROYECTO.firebaseapp.com',
-    projectId: 'TU_PROYECTO',
-    storageBucket: 'TU_PROYECTO.appspot.com',
-    messagingSenderId: 'TU_SENDER_ID',
-    appId: 'TU_APP_ID',
+    apiKey: 'AIzaSyDyN_ltE4-ThckltFOtBqXMRYwsMagGMGY',
+    authDomain: 'dolcenena7628.firebaseapp.com',
+    projectId: 'dolcenena7628',
+    storageBucket: 'dolcenena7628.firebasestorage.app',
+    messagingSenderId: '958954567132',
+    appId: '1:958954567132:web:1f2b438f480aaa90894b19',
   };
 
   firebase.initializeApp(firebaseConfig);
