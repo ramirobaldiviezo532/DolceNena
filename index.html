@@ -449,12 +449,62 @@
   </div>
 </section>
 
+<!-- divider -->
+<div class="divider" aria-hidden="true">
+  <svg viewBox="0 0 120 20" xmlns="http://www.w3.org/2000/svg">
+    <line x1="0" y1="10" x2="40" y2="10" stroke="currentColor" stroke-width="1"/>
+    <g transform="translate(60,10) rotate(45)">
+      <rect x="-14" y="-2.5" width="28" height="5" rx="2.5" fill="currentColor"/>
+      <circle cx="15.5" cy="0" r="3.4" fill="currentColor"/>
+      <circle cx="-15.5" cy="0" r="3.4" fill="currentColor"/>
+    </g>
+    <line x1="80" y1="10" x2="120" y2="10" stroke="currentColor" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ============ AYÚDANOS A MEJORAR ============ -->
+<section class="section" id="mejorar">
+  <div class="container container-narrow center">
+    <p class="eyebrow">Tu opinión importa</p>
+    <h2 class="section-title">Ayúdanos a mejorar</h2>
+    <p class="section-lead center">¿Alguna galleta no cumplió tus expectativas? Cuéntanos qué pasó. Este formulario es completamente anónimo — no pedimos tu nombre ni tu contacto. Leemos cada mensaje y lo tomamos en cuenta para seguir mejorando.</p>
+
+    <form class="feedback-form" id="feedbackForm" novalidate>
+      <!-- Campo trampa para bots: invisible para personas -->
+      <div class="feedback-honeypot" aria-hidden="true">
+        <label for="feedbackWebsite">No llenar este campo</label>
+        <input type="text" id="feedbackWebsite" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <label class="feedback-label" for="feedbackFlavor">¿Sobre qué sabor? <span>(opcional)</span></label>
+      <select id="feedbackFlavor" class="feedback-select">
+        <option value="">No especificar</option>
+        <option value="Choconena">Choconena</option>
+        <option value="Pecosita">Pecosita</option>
+        <option value="Velvet Dreams">Velvet Dreams</option>
+        <option value="La Morenaza">La Morenaza</option>
+        <option value="Galleraka">Galleraka</option>
+        <option value="Cerelita">Cerelita</option>
+        <option value="Otro">Otro / No aplica</option>
+      </select>
+
+      <label class="feedback-label" for="feedbackMessage">Tu comentario</label>
+      <textarea id="feedbackMessage" class="feedback-textarea" rows="5" maxlength="600" placeholder="Cuéntanos qué pasó, con la confianza de que es completamente anónimo..." required></textarea>
+      <p class="feedback-count"><span id="feedbackCount">0</span>/600</p>
+
+      <button type="submit" class="btn btn-small feedback-submit" id="feedbackSubmit">Enviar de forma anónima</button>
+      <p class="feedback-status" id="feedbackStatus" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <!-- ============ CONTACTO (placeholder) ============ -->
 <footer class="footer" id="contacto">
   <div class="container footer-grid">
     <div>
       <p class="nav-logo footer-logo">DN <span>Dolce Nena</span></p>
       <p class="footer-tagline">Sabor que conquista</p>
+      <p class="footer-feedback-link"><a href="#mejorar">¿Algo no te gustó? Cuéntanos</a></p>
     </div>
     <div>
       <h4>Contacto</h4>
@@ -474,6 +524,10 @@
   </div>
   <p class="footer-copy">© 2026 Dolce Nena by Andrea. Todos los derechos reservados.</p>
 </footer>
+
+<!-- Firebase (solo para el formulario anónimo de "Ayúdanos a mejorar") -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script src="script.js"></script>
 </body>

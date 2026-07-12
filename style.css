@@ -781,3 +781,81 @@ ul{ list-style:none; margin:0; padding:0; }
     font-size:0.8rem;
   }
 }
+
+/* ===================================================================
+   Ayúdanos a mejorar — formulario de quejas anónimas
+=================================================================== */
+#mejorar .section-lead{ margin-left:auto; margin-right:auto; }
+
+.feedback-form{
+  margin-top:40px;
+  text-align:left;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.feedback-label{
+  font-size:0.82rem;
+  font-weight:500;
+  letter-spacing:0.03em;
+  color:var(--maroon);
+  margin:14px 0 2px;
+}
+.feedback-label span{
+  font-weight:300;
+  color:var(--ink-soft);
+  text-transform:none;
+  letter-spacing:normal;
+}
+.feedback-select,
+.feedback-textarea{
+  width:100%;
+  font-family:var(--font-body);
+  font-size:0.95rem;
+  color:var(--ink);
+  background:var(--white);
+  border:1px solid rgba(67,18,34,0.16);
+  border-radius:4px;
+  padding:12px 14px;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.feedback-select:focus,
+.feedback-textarea:focus{
+  outline:none;
+  border-color:var(--maroon-soft);
+  box-shadow:0 0 0 3px rgba(108,36,56,0.1);
+}
+.feedback-textarea{ resize:vertical; min-height:130px; }
+.feedback-count{
+  align-self:flex-end;
+  margin:4px 0 0;
+  font-size:0.76rem;
+  color:var(--ink-soft);
+  opacity:0.7;
+}
+.feedback-submit{ margin-top:14px; align-self:flex-start; }
+.feedback-status{
+  margin:12px 0 0;
+  font-size:0.88rem;
+  min-height:1.2em;
+}
+.feedback-status.is-success{ color:var(--maroon-soft); font-weight:500; }
+.feedback-status.is-error{ color:#A3423A; font-weight:500; }
+
+/* Campo trampa anti-bots: invisible para personas, presente para bots */
+.feedback-honeypot{
+  position:absolute;
+  left:-9999px;
+  width:1px; height:1px;
+  overflow:hidden;
+  opacity:0;
+}
+
+.footer-feedback-link{ margin-top:14px !important; }
+.footer-feedback-link a{
+  font-size:0.85rem;
+  text-decoration:underline;
+  opacity:0.85;
+  transition:color .2s ease;
+}
+.footer-feedback-link a:hover{ color:var(--gold); opacity:1; }

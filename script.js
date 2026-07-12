@@ -238,3 +238,79 @@ if (packBuilder) {
 
   renderPackSummary();
 }
+
+// ===== Ayúdanos a mejorar (quejas anónimas guardadas en Firebase Firestore) =====
+const feedbackForm = document.getElementById('feedbackForm');
+
+if (feedbackForm) {
+  // 🔧 Reemplaza estos valores con los de TU proyecto de Firebase.
+  // Los encuentras en: Firebase Console → ⚙️ Configuración del proyecto → "Tus apps" → SDK setup and configuration.
+  const firebaseConfig = {
+    apiKey: 'TU_API_KEY',
+    authDomain: 'TU_PROYECTO.firebaseapp.com',
+    projectId: 'TU_PROYECTO',
+    storageBucket: 'TU_PROYECTO.appspot.com',
+    messagingSenderId: 'TU_SENDER_ID',
+    appId: 'TU_APP_ID',
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const feedbackMessage = document.getElementById('feedbackMessage');
+  const feedbackFlavor = document.getElementById('feedbackFlavor');
+  const feedbackWebsite = document.getElementById('feedbackWebsite'); // campo trampa (honeypot)
+  const feedbackSubmit = document.getElementById('feedbackSubmit');
+  const feedbackStatus = document.getElementById('feedbackStatus');
+  const feedbackCount = document.getElementById('feedbackCount');
+  const FEEDBACK_MAX_LEN = 600;
+
+  feedbackMessage.addEventListener('input', () => {
+    feedbackCount.textContent = feedbackMessage.value.length;
+  });
+
+  feedbackForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Si el campo trampa viene lleno, es un bot: lo ignoramos en silencio
+    if (feedbackWebsite.value.trim() !== '') {
+      feedbackForm.reset();
+      feedbackCount.textContent = '0';
+      return;
+    }
+
+    const mensaje = feedbackMessage.value.trim();
+    if (!mensaje) {
+      feedbackStatus.textContent = 'Por favor escribe un comentario antes de enviar.';
+      feedbackStatus.classList.remove('is-success');
+      feedbackStatus.classList.add('is-error');
+      return;
+    }
+
+    feedbackSubmit.disabled = true;
+    feedbackSubmit.textContent = 'Enviando...';
+    feedbackStatus.textContent = '';
+
+    try {
+      await db.collection('quejas').add({
+        mensaje: mensaje.slice(0, FEEDBACK_MAX_LEN),
+        sabor: feedbackFlavor.value || 'No especificado',
+        creadoEn: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+      feedbackForm.reset();
+      feedbackCount.textContent = '0';
+      feedbackStatus.textContent = '¡Gracias! Tu comentario fue enviado de forma anónima y lo tomaremos en cuenta.';
+      feedbackStatus.classList.remove('is-error');
+      feedbackStatus.classList.add('is-success');
+    } catch (error) {
+      console.error('Error al enviar el comentario:', error);
+      feedbackStatus.textContent = 'Hubo un problema al enviar tu comentario. Intenta de nuevo en unos minutos.';
+      feedbackStatus.classList.remove('is-success');
+      feedbackStatus.classList.add('is-error');
+    } finally {
+      feedbackSubmit.disabled = false;
+      feedbackSubmit.textContent = 'Enviar de forma anónima';
+    }
+  });
+}
