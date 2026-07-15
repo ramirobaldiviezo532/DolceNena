@@ -279,13 +279,18 @@ if (packBuilder) {
       .filter(item => item.qty > 0)
       .map(item => ({ id: item.flavor, quantity: item.qty, item_price: item.unitPrice }));
 
-    trackPixel('InitiateCheckout', {
+    // Esta única acción cumple, según Meta, las definiciones oficiales de dos eventos:
+    // inicia un chat (Contact) y es el único botón de "finalizar pedido" (InitiateCheckout).
+    // Se disparan ambos con los mismos datos del carrito para no duplicar lógica.
+    const checkoutParams = {
       value: Number(total.toFixed(2)),
       currency: 'BOB',
       num_items: totalQty,
       content_type: 'product',
       contents,
-    });
+    };
+    trackPixel('InitiateCheckout', checkoutParams);
+    trackPixel('Contact', checkoutParams);
 
     window.open(url, '_blank');
   });
