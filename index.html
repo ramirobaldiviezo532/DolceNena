@@ -21,6 +21,33 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Mrs+Saint+Delafield&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;
+n.push=n;
+n.loaded=!0;
+n.version='2.0';
+n.queue=[];
+t=b.createElement(e);
+t.async=!0;
+t.src=v;
+s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}
+(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '4290152644648376');
+fbq('track', 'PageView');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=4290152644648376&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -443,7 +470,7 @@
           <p class="location-label">Visítanos</p>
           <p class="location-address">Calle Qoriq'enti, frente a Surtidor América YPFB</p>
         </div>
-        <a href="https://maps.app.goo.gl/xxG9n9vey86umLPh7" target="_blank" rel="noopener" class="btn btn-small location-cta">Cómo llegar</a>
+        <a href="https://maps.app.goo.gl/xxG9n9vey86umLPh7" target="_blank" rel="noopener" class="btn btn-small location-cta" id="locationCta">Cómo llegar</a>
       </div>
     </div>
   </div>

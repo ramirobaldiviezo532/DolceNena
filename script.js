@@ -1,3 +1,15 @@
+// ===== Meta Pixel: seguimiento de eventos =====
+// Envía un evento al Pixel solo si fbq cargó correctamente. Si el navegador
+// bloquea el script (adblock, etc.) esto evita que se rompa el resto del sitio.
+const trackPixel = (eventName, params) => {
+  if (typeof fbq === 'function') {
+    fbq('track', eventName, params);
+  }
+};
+
+// Vista del catálogo: se dispara una sola vez al cargar la página
+trackPixel('ViewContent', { content_category: 'Cookies' });
+
 // Nav background switches once the hero has scrolled past
 const nav = document.getElementById('siteNav');
 const setNavState = () => {
@@ -6,6 +18,14 @@ const setNavState = () => {
 };
 setNavState();
 window.addEventListener('scroll', setNavState, { passive: true });
+
+// ===== Cómo llegar (Meta Pixel: FindLocation) =====
+const locationCta = document.getElementById('locationCta');
+if (locationCta) {
+  locationCta.addEventListener('click', () => {
+    trackPixel('FindLocation');
+  });
+}
 
 // Mobile menu toggle
 const navToggle = document.getElementById('navToggle');
@@ -62,6 +82,13 @@ document.querySelectorAll('.card').forEach(card => {
   increaseBtn.addEventListener('click', () => {
     if (qty < MAX_QTY) {
       qty += 1;
+      trackPixel('AddToCart', {
+        content_name: flavorName,
+        content_ids: [flavorName],
+        content_type: 'product',
+        value: unitPrice,
+        currency: 'BOB',
+      });
       render();
     }
   });
@@ -73,6 +100,13 @@ document.querySelectorAll('.card').forEach(card => {
       const unidad = qty === 1 ? 'galleta' : 'galletas';
       const mensaje = `¡Hola Dolce Nena! Quiero pedir ${qty} ${unidad} de *${flavorName}*. Total a pagar: Bs. ${total}`;
       const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+      trackPixel('Contact', {
+        content_name: flavorName,
+        content_ids: [flavorName],
+        content_type: 'product',
+        value: Number(total),
+        currency: 'BOB',
+      });
       window.open(url, '_blank');
     });
   }
@@ -195,6 +229,13 @@ if (packBuilder) {
     item.increaseBtn.addEventListener('click', () => {
       if (item.qty < PACK_MAX_PER_FLAVOR) {
         item.qty += 1;
+        trackPixel('AddToCart', {
+          content_name: item.flavor,
+          content_ids: [item.flavor],
+          content_type: 'product',
+          value: item.unitPrice,
+          currency: 'BOB',
+        });
         updateItem();
       }
     });
@@ -233,6 +274,19 @@ if (packBuilder) {
     mensaje += `\nTotal a pagar: Bs. ${total.toFixed(2)}`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+
+    const contents = packItems
+      .filter(item => item.qty > 0)
+      .map(item => ({ id: item.flavor, quantity: item.qty, item_price: item.unitPrice }));
+
+    trackPixel('InitiateCheckout', {
+      value: Number(total.toFixed(2)),
+      currency: 'BOB',
+      num_items: totalQty,
+      content_type: 'product',
+      contents,
+    });
+
     window.open(url, '_blank');
   });
 
@@ -296,6 +350,10 @@ if (feedbackForm) {
         mensaje: mensaje.slice(0, FEEDBACK_MAX_LEN),
         sabor: feedbackFlavor.value || 'No especificado',
         creadoEn: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+
+      trackPixel('SubmitApplication', {
+        content_category: feedbackFlavor.value || 'No especificado',
       });
 
       feedbackForm.reset();
